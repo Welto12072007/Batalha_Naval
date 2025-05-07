@@ -113,7 +113,7 @@ public class Batalha_Naval {
 
     public String lerNome(String texto) {
         System.out.print(texto + " - Digite seu nome: ");
-        return ler.nextLine().trim();
+        return ler.nextLine();
     }
 
     public boolean escolherModoAlocacao(String nome) {
@@ -239,7 +239,7 @@ public class Batalha_Naval {
     public int lerColunaLetra(String msg) {
         while (true) {
             System.out.print(msg);
-            String entrada = ler.nextLine().trim().toUpperCase();
+            String entrada = ler.nextLine().toUpperCase();
             if (entrada.length() == 1) {
                 char letra = entrada.charAt(0);
                 if (letra >= 'A' && letra <= 'J') {
