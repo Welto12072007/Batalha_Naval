@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Batalha_Naval {
-
     char AGUA = '~';
     char NAVIO = 'N';
     char TIRO_AGUA = 'o';
@@ -59,8 +58,8 @@ public class Batalha_Naval {
         boolean jogoAtivo = true;
 
         while (jogoAtivo) {
-            boolean continua = true;
-            while (continua) {
+            boolean vezDoJogador = true;
+            while (vezDoJogador && jogoAtivo) {
                 System.out.println("\n=== PLACAR ===");
                 System.out.println("Turno: " + turno);
                 System.out.println("Jogador atual: " + atual.nome);
@@ -90,17 +89,17 @@ public class Batalha_Naval {
                     oponente.mapa[linha][coluna] = TIRO_NAVIO;
                     if (barcoAfundado(oponente, linha, coluna)) {
                         System.out.println("Você afundou um navio!");
-                        continua = false;
                     }
                     if (todosNaviosAfundados(oponente)) {
                         System.out.println("\nFIM DE JOGO! " + atual.nome + " venceu!");
                         jogoAtivo = false;
-                        break;
+                    } else {
+                        vezDoJogador = false;
                     }
                 } else {
                     System.out.println("ÁGUA!");
                     oponente.mapa[linha][coluna] = TIRO_AGUA;
-                    continua = false;
+                    vezDoJogador = false;
                 }
             }
 
@@ -182,11 +181,15 @@ public class Batalha_Naval {
         for (int d = 0; d < 4; d++) {
             int nl = l + dx[d];
             int nc = c + dy[d];
-            while (nl >= 0 && nl < 10 && nc >= 0 && nc < 10) {
+            boolean seguir = true;
+            while (seguir && nl >= 0 && nl < 10 && nc >= 0 && nc < 10) {
                 if (j.mapa[nl][nc] == NAVIO) return false;
-                if (j.mapa[nl][nc] == AGUA || j.mapa[nl][nc] == TIRO_AGUA) break;
-                nl += dx[d];
-                nc += dy[d];
+                if (j.mapa[nl][nc] == AGUA || j.mapa[nl][nc] == TIRO_AGUA) {
+                    seguir = false;
+                } else {
+                    nl += dx[d];
+                    nc += dy[d];
+                }
             }
         }
         return true;
@@ -228,7 +231,6 @@ public class Batalha_Naval {
             System.out.print("Digite um número entre " + min + " e " + max + ": ");
         }
     }
-
 
     public int lerIntValido(int min, int max, String msg) {
         System.out.print(msg);
