@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Batalha_Naval {
+
     char AGUA = '~';
     char NAVIO = 'N';
     char TIRO_AGUA = 'o';
@@ -58,8 +59,8 @@ public class Batalha_Naval {
         boolean jogoAtivo = true;
 
         while (jogoAtivo) {
-            boolean vezDoJogador = true;
-            while (vezDoJogador && jogoAtivo) {
+            boolean continua = true;
+            while (continua && jogoAtivo) {
                 System.out.println("\n=== PLACAR ===");
                 System.out.println("Turno: " + turno);
                 System.out.println("Jogador atual: " + atual.nome);
@@ -93,13 +94,11 @@ public class Batalha_Naval {
                     if (todosNaviosAfundados(oponente)) {
                         System.out.println("\nFIM DE JOGO! " + atual.nome + " venceu!");
                         jogoAtivo = false;
-                    } else {
-                        vezDoJogador = false;
                     }
                 } else {
                     System.out.println("ÁGUA!");
                     oponente.mapa[linha][coluna] = TIRO_AGUA;
-                    vezDoJogador = false;
+                    continua = false;
                 }
             }
 
@@ -181,11 +180,11 @@ public class Batalha_Naval {
         for (int d = 0; d < 4; d++) {
             int nl = l + dx[d];
             int nc = c + dy[d];
-            boolean seguir = true;
-            while (seguir && nl >= 0 && nl < 10 && nc >= 0 && nc < 10) {
+            boolean continuarBusca = true;
+            while (continuarBusca && nl >= 0 && nl < 10 && nc >= 0 && nc < 10) {
                 if (j.mapa[nl][nc] == NAVIO) return false;
                 if (j.mapa[nl][nc] == AGUA || j.mapa[nl][nc] == TIRO_AGUA) {
-                    seguir = false;
+                    continuarBusca = false;
                 } else {
                     nl += dx[d];
                     nc += dy[d];
